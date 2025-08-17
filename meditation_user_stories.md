@@ -1,311 +1,389 @@
 # Meditation User Story
 
-# 🧘 Meditation App – User Stories  
+# 🧘 Meditation App – User Stories
 
-## 🔑 Login & Registration  
+---
 
-### User Story 1 – User Registration  
+## Exercise 4: Develop User Stories For Login/Registration Screen
+
+### User Story 1 – Application Registration
 **Title:**  
-As a user, I want to register by entering my username, email, and password so that I can create an account.  
+As a user, I want to register by entering my username, email, and password so that I can create an account.
 
 **Acceptance Criteria:**  
-- Users can enter username, email, and password in the registration form.  
-- Clicking **“Sign Up”** creates an account if all details are valid.  
-- An error message is displayed if any input is invalid or missing.  
+- Users can enter valid details (username, email, password).  
+- Clicking **“Sign Up”** creates an account.  
+- Error messages are displayed if any input is invalid or missing.  
 
 **Story Points:** 5  
 
 ---
 
-### User Story 2 – User Login  
+### User Story 2 – Application Login
 **Title:**  
-As a user, I want to log in using my email and password so that I can access my account.  
+As a user, I want to log in using my email and password so that I can access my account.
 
 **Acceptance Criteria:**  
-- Users can enter email and password in the login form.  
-- Users with correct credentials are redirected to their dashboard.  
+- Users can log in with correct credentials using the **Login** button.  
+- Successful login redirects users to their dashboard.  
 - An error message is displayed for incorrect credentials.  
 
 **Story Points:** 5  
 
 ---
 
-### User Story 3 – Validation Feedback  
+### User Story 3 – Error Feedback
 **Title:**  
-As a user, I want to receive feedback when I attempt to sign up or log in without entering details so that I can fix the errors.  
+As a user, I want to receive feedback when I sign up or log in incorrectly so that I can fix the errors.
 
 **Acceptance Criteria:**  
-- Error messages are displayed for all required missing fields (e.g., “Email is required”).  
-- Users cannot proceed without filling mandatory inputs.  
-- Error messages are cleared once the user enters valid details.  
+- An error message is displayed if required fields are missing.  
+- An error message appears if incorrect login details are entered.  
+- Error messages are clear and actionable.  
 
 **Story Points:** 3  
 
 ---
 
-### User Story 4 – Persist User Data  
+### User Story 4 – Store User Data
 **Title:**  
-As a user, I want my details to be stored in local storage so that my data persists between sessions.  
+As a user, I want my details to be stored in local storage so that my data persists between sessions.
 
 **Acceptance Criteria:**  
-- User details are securely stored in local storage after registration.  
-- Stored details are used to authenticate the user during login.  
-- Users remain logged in between sessions until they log out.  
+- User details are securely saved in local storage.  
+- Stored details are used for authentication during login.  
+- Users stay logged in between sessions until they log out.  
 
 **Story Points:** 8  
 
 ---
 
-## 🏠 Homepage  
+📌 **Save as:** `userstories-login-registration-evidence.png`
 
-### User Story 1 – Personalized Greeting  
+---
+
+## Exercise 5: Develop User Stories For Home Screen
+
+### User Story 1 – Progress Overview
 **Title:**  
-As a user, I want a personalized greeting with my name and a title so that I feel welcomed and encouraged to meditate.  
+As a user, I want to view an overview of my data on the home screen so that I can monitor my progress at a glance.
 
 **Acceptance Criteria:**  
-- Display “Hello, [username]” on the homepage.  
-- Display the title “Find your perfect meditation.”  
-- If username is unavailable, display “Hello” with no name.  
+- Display relevant metrics (e.g., steps, calories, or meditation streaks).  
+- Data is updated in real-time or at regular intervals.  
+- Layout highlights progress clearly and accessibly.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 2 – Introductory Guide
+**Title:**  
+As a new user, I want to see a quick introductory guide on the home screen so that I can learn how to use the app.
+
+**Acceptance Criteria:**  
+- Show a carousel or pop-up with tips for key features.  
+- Provide a “Skip” option for users who don’t need guidance.  
+- Ensure guide appears only for first-time users (or until dismissed).  
 
 **Story Points:** 3  
 
 ---
 
-### User Story 2 – Popular Meditation Cards  
+### User Story 3 – Quick Access Features
 **Title:**  
-As a user, I want to see popular meditation cards so that I can explore options based on my preferences.  
+As a user, I want to access my most-used features from the home screen so that I can navigate the app efficiently.
 
 **Acceptance Criteria:**  
-- Display cards with image, title, description, category, and duration.  
-- Each card shows tags like **Calmness**, **Relaxation**, and time (10–15 minutes).  
-- Tapping a card opens the meditation detail page.  
-- If no popular items, show an empty state.  
+- Display shortcuts to top-used features (e.g., Saved Items, Track Orders).  
+- Clicking shortcuts navigates directly to those features.  
+- Layout is customizable to highlight personal usage.  
+
+**Story Points:** 5  
+
+---
+
+📌 **Save as:** `userStories-homeScreen-evidence.png`
+
+---
+
+## Exercise 6: Develop User Stories For Detail Screen
+
+### User Story 1 – Item Details
+**Title:**  
+As a user, I want detailed information on a selected item so that I can make informed decisions.
+
+**Acceptance Criteria:**  
+- Display key information (e.g., description, category, duration, reviews).  
+- Show multiple images or visual elements where relevant.  
+- Include pricing or progress indicators if applicable.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 2 – Save & Share
+**Title:**  
+As a user, I want to perform actions like saving or sharing an item so that I can share interesting content.
+
+**Acceptance Criteria:**  
+- Provide **Save** (Favorites) button.  
+- Provide **Share** option (via native share tools).  
+- Show confirmation when action is completed successfully.  
+
+**Story Points:** 3  
+
+---
+
+### User Story 3 – Related Items
+**Title:**  
+As a user, I want to view related items on the detail screen so that I can explore more options.
+
+**Acceptance Criteria:**  
+- Display a list of related/recommended items.  
+- Each related item includes title, category, and preview.  
+- Tapping a related item opens its detail screen.  
+
+**Story Points:** 5  
+
+---
+
+📌 **Save as:** `userStories-detailScreen-evidence.png`
+
+---
+
+## Exercise 7: Develop User Stories To Integrate Persistent Data
+
+### User Story 1 – Persistent Login
+**Title:**  
+As a user, I want my login state to persist across sessions so that I don’t need to re-enter details every time.
+
+**Acceptance Criteria:**  
+- Automatically log in verified users until they log out.  
+- Securely store and validate session tokens.  
+- Expired sessions prompt re-login.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 2 – Save Preferences
+**Title:**  
+As a user, I want to save my preferences (e.g., dark mode, language) so that the app remembers my settings.
+
+**Acceptance Criteria:**  
+- Save preferences locally (and optionally to cloud for sync).  
+- Apply preferences immediately when app restarts.  
+- Allow users to update preferences anytime in Settings.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 3 – Activity Logs
+**Title:**  
+As an admin, I want user activity logs to persist so that I can track and analyze trends over time.
+
+**Acceptance Criteria:**  
+- Store activity logs with timestamps.  
+- Logs remain accessible over multiple sessions.  
+- Admins can query and generate reports from logs.  
 
 **Story Points:** 8  
 
 ---
 
-### User Story 3 – Daily Featured Meditation  
+📌 **Save as:** `userStories-persistent-evidence.png`
+
+---
+
+## Exercise 8: Develop User Stories To Integrate External API
+
+### User Story 1 – Weather Updates
 **Title:**  
-As a user, I want a daily featured meditation so that I can quickly access a recommended session.  
+As a user, I want to view real-time weather updates on the home screen so that I can plan my day effectively.
 
 **Acceptance Criteria:**  
-- A dedicated section highlights one meditation with image, title, category, and duration.  
-- Featured meditation updates daily.  
-- Tapping the card opens detail or starts playback.  
+- Integrate with a weather API.  
+- Display current weather with icon and temperature.  
+- Refresh data automatically at intervals.  
 
 **Story Points:** 5  
 
 ---
 
-### User Story 4 – Intuitive Navigation Icons  
+### User Story 2 – Currency Conversion
 **Title:**  
-As a user, I want intuitive navigation icons so that I can easily move around the app.  
+As a user, I want to see live currency conversion rates when making purchases so that I can make informed decisions.
 
 **Acceptance Criteria:**  
-- Display app logo in top-left corner (returns to homepage).  
-- Display a settings icon in top-right corner (opens Settings).  
-- Icons remain visible and accessible on all standard screen sizes.  
-
-**Story Points:** 3  
-
----
-
-## 📖 Detailed Exercise Screen  
-
-### User Story 1 – About Section  
-**Title:**  
-As a user, I want an “About” section for each exercise so that I can understand its benefits and purpose.  
-
-**Acceptance Criteria:**  
-- Show a short description under the exercise title.  
-- Description explains focus (e.g., relaxation, calmness).  
-- Highlight stress-reducing benefits.  
-
-**Story Points:** 3  
-
----
-
-### User Story 2 – Instructions Section  
-**Title:**  
-As a user, I want an “Instructions” section for each exercise so that I can perform it correctly.  
-
-**Acceptance Criteria:**  
-- Display an expandable “Instructions” section below About.  
-- Provide step-by-step guidance on posture and breathing.  
-- Instructions are concise and mobile-friendly.  
+- Integrate with a currency exchange API.  
+- Show product prices in user’s preferred currency.  
+- Refresh conversion rates at least daily.  
 
 **Story Points:** 5  
 
 ---
 
-### User Story 3 – Add to Favorites  
+### User Story 3 – Nearby Restaurants
 **Title:**  
-As a user, I want an “Add to Favorites” button so that I can easily save an exercise for future practice.  
+As a user, I want to see nearby restaurants on a map so that I can choose a dining location conveniently.
 
 **Acceptance Criteria:**  
-- Prominent **“Add to Favorites”** button at bottom of page.  
-- Tapping saves item to Favorites list.  
-- Button changes state to **“Added”** with a filled icon.  
+- Integrate Google Maps API (or similar).  
+- Show restaurant pins with details.  
+- Clicking a pin opens restaurant details.  
+
+**Story Points:** 8  
+
+---
+
+📌 **Save as:** `userStories-externalAPI-evidence.png`
+
+---
+
+## Exercise 9: Develop User Stories To Implement Settings Menu
+
+### User Story 1 – Accessible Settings
+**Title:**  
+As a user, I want to access a settings menu from any screen so that I can adjust preferences at my convenience.
+
+**Acceptance Criteria:**  
+- Display a settings icon on all screens.  
+- Tapping icon opens the settings menu.  
+- Settings menu is accessible within two taps.  
 
 **Story Points:** 3  
 
 ---
 
-### User Story 4 – Navigation Icons  
+### User Story 2 – Categorized Options
 **Title:**  
-As a user, I want navigation icons for sharing and going back so that I can easily manage the exercise page.  
+As a user, I want to see categorized sections in the settings menu so that I can quickly find options.
 
 **Acceptance Criteria:**  
-- Back icon in top-left corner returns to previous screen.  
-- Share icon in top-right opens device sharing options.  
-- Icons are always visible above banner image.  
+- Group settings into logical categories (Profile, Notifications, Privacy).  
+- Provide clear labels and icons for each category.  
+- Categories are collapsible/expandable.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 3 – Admin Control
+**Title:**  
+As an admin, I want to enable or disable certain settings so that I can maintain app security and compliance.
+
+**Acceptance Criteria:**  
+- Admin dashboard allows toggling user access to settings.  
+- Disabled settings are hidden or greyed out for users.  
+- Changes sync across all devices in real-time.  
+
+**Story Points:** 8  
+
+---
+
+📌 **Save as:** `userStories-settingMenu-evidence.png`
+
+---
+
+## Exercise 10: Develop User Stories To Implement Settings Screen
+
+### User Story 1 – Dark Mode
+**Title:**  
+As a user, I want to enable dark mode in the settings screen so that I can reduce eye strain.
+
+**Acceptance Criteria:**  
+- Provide a **Dark Mode** toggle in Appearance section.  
+- Switching applies theme immediately.  
+- Preference persists across sessions.  
 
 **Story Points:** 3  
 
 ---
 
-## ❤️ Add to Favorites  
-
-### User Story 1 – Add to Favorites  
+### User Story 2 – Notifications Preferences
 **Title:**  
-As a user, I want to add an item to my Favorites so that I can save activities or articles I like for quick access later.  
+As a user, I want to adjust notification preferences so that I only receive alerts relevant to me.
 
 **Acceptance Criteria:**  
-- Heart icon + **“Add to Favorites”** text next to items.  
-- Outlined heart = not in Favorites.  
-- Tapping adds item → changes icon to filled + button to **“Remove from Favorites”**.  
-- Item appears in Favorites list.  
+- Allow toggling specific categories of notifications.  
+- Save preferences and apply instantly.  
+- Ensure disabled categories do not send notifications.  
+
+**Story Points:** 5  
+
+---
+
+### User Story 3 – Update Account Info
+**Title:**  
+As a user, I want to update my email and password so that I can keep my account secure.
+
+**Acceptance Criteria:**  
+- Provide fields to update email and password.  
+- Changes require confirmation (e.g., re-enter password).  
+- Show success message when updates are applied.  
+
+**Story Points:** 5  
+
+---
+
+📌 **Save as:** `userStories-menuSettings-evidence.png`
+
+---
+
+## Exercise 11: Develop User Stories To Implement Notifications
+
+### User Story 1 – Daily Reminders
+**Title:**  
+As a user, I want to receive a daily reminder notification so that I don’t forget my tasks.
+
+**Acceptance Criteria:**  
+- App sends notification at a set time daily.  
+- Time can be customized in Settings.  
+- Notifications are clear and actionable.  
 
 **Story Points:** 3  
 
 ---
 
-### User Story 2 – Remove from Favorites  
+### User Story 2 – New Features
 **Title:**  
-As a user, I want to remove an item from my Favorites so that I can manage my saved content.  
+As a user, I want to receive notifications about new features so that I can explore them.  
 
 **Acceptance Criteria:**  
-- Items already in Favorites show **“Remove from Favorites”** with filled heart.  
-- Tapping removes the item and reverts to outlined heart.  
-- Add/remove works anytime with real-time updates.  
+- Notify users when new features/content are available.  
+- Notifications link directly to the new feature.  
+- Frequency is limited to avoid spamming.  
 
 **Story Points:** 3  
 
 ---
 
-### User Story 3 – My Favorites Screen  
+### User Story 3 – Turn Off Promotions
 **Title:**  
-As a user, I want a “My Favorites” screen so that I can view and manage all my saved items in one place.  
+As a user, I want to turn off promotional notifications so that I can focus on essentials.
 
 **Acceptance Criteria:**  
-- Show all saved items in a list/grid.  
-- Each item displays **title, category, and duration**.  
-- Tapping an item opens its details or starts it.  
-- Favorites list persists across sessions.  
+- Provide toggle to disable promotional alerts.  
+- Keep essential notifications active.  
+- Save preferences persistently.  
 
 **Story Points:** 5  
 
 ---
 
-## ⏰ Daily Reminders  
-
-### User Story 1 – Calendar Navigation  
+### User Story 4 – Targeted Notifications
 **Title:**  
-As a user, I want to view the calendar for the current month and navigate between months so that I can easily select dates for reminders.  
+As an admin, I want to send notifications to specific groups so that I can target them effectively.
 
 **Acceptance Criteria:**  
-- Show current month with all days visible.  
-- Provide arrows to navigate between months.  
-- Default text: **“Selected Date: None”** and **“Selected Time: 20:44”** until selected.  
+- Admin dashboard allows selecting user groups.  
+- Notifications sent only to chosen segments.  
+- Logs track notification delivery and open rates.  
 
-**Story Points:** 5  
+**Story Points:** 8  
 
 ---
 
-### User Story 2 – Select Date and Time  
-**Title:**  
-As a user, I want to select a date and time for a reminder so that I can schedule it properly.  
-
-**Acceptance Criteria:**  
-- User can pick a date from calendar.  
-- User can select a time from time picker.  
-- Selected values replace default text.  
-- System validates selection before saving.  
-
-**Story Points:** 5  
-
----
-
-### User Story 3 – Add Reminder  
-**Title:**  
-As a user, I want to add a reminder after selecting a time so that I can schedule it for a future date and time.  
-
-**Acceptance Criteria:**  
-- After choosing valid date & time, user taps **“Add Reminder”**.  
-- Reminder is saved and added to list.  
-- Confirmation message appears.  
-
-**Story Points:** 3  
-
----
-
-### User Story 4 – Manage Reminders  
-**Title:**  
-As a user, I want to see a list of all my reminders so that I can manage them easily.  
-
-**Acceptance Criteria:**  
-- Display list of reminders with date + time.  
-- Each reminder has red **“Delete”** button.  
-- Deleting removes item from list.  
-- Changes persist across sessions.  
-
-**Story Points:** 5  
-
----
-
-## 📤 Sharing Exercises  
-
-### User Story – Share Exercises  
-**Title:**  
-As a user, I want to easily share recommended exercises with friends or family so that I can help others discover helpful activities.  
-
-**Acceptance Criteria:**  
-- Clear **share button/icon** on exercise detail page.  
-- Tapping opens device’s native share options (social, email, messaging).  
-- Shared content includes **title, category, and link/preview**.  
-- If sharing fails, user sees error message.  
-
-**Story Points:** 5  
-
----
-
-## 🚪 Logout  
-
-### User Story – Logout  
-**Title:**  
-As a user, I want a clear and visible logout button so that I can easily log out of my account when I’m done using the app.  
-
-**Acceptance Criteria:**  
-- Display **Logout** button (e.g., in Settings/Profile).  
-- Tapping ends session and redirects to **Login** page.  
-- All session data is securely cleared.  
-- Restricted pages prompt login after logout.  
-
-**Story Points:** 3  
-
----
-
-## ⚙️ Change Settings (Theme)  
-
-### User Story – Theme Toggle  
-**Title:**  
-As a user, I want to switch between light and dark themes so that I can reduce eye strain and customize the app’s visual experience.  
-
-**Acceptance Criteria:**  
-- **Theme toggle** in Settings for Light/Dark mode.  
-- Switching themes is seamless.  
-- Theme applies immediately without restart.  
-- User preference persists across sessions.  
-
-**Story Points:** 5  
+📌 **Save as:** `userStories-notifications-evidence.png`
