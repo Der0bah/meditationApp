@@ -4,8 +4,6 @@
 
 ---
 
-## Exercise 4: Develop User Stories For Login/Registration Screen
-
 ### User Story 1 – Application Registration
 **Title:**  
 As a user, I want to register by entering my username, email, and password so that I can create an account.
