@@ -4,6 +4,8 @@
 
 ---
 
+## User Stories For Login/Registration Screen
+
 ### User Story 1 – Application Registration
 **Title:**  
 As a user, I want to register by entering my username, email, and password so that I can create an account.
@@ -56,11 +58,11 @@ As a user, I want my details to be stored in local storage so that my data persi
 
 ---
 
-📌 **Save as:** `userstories-login-registration-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 5: Develop User Stories For Home Screen
+## User Stories For Home Screen
 
 ### User Story 1 – Progress Overview
 **Title:**  
@@ -101,11 +103,11 @@ As a user, I want to access my most-used features from the home screen so that I
 
 ---
 
-📌 **Save as:** `userStories-homeScreen-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 6: Develop User Stories For Detail Screen
+## User Stories For Detail Screen
 
 ### User Story 1 – Item Details
 **Title:**  
@@ -146,11 +148,11 @@ As a user, I want to view related items on the detail screen so that I can explo
 
 ---
 
-📌 **Save as:** `userStories-detailScreen-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 7: Develop User Stories To Integrate Persistent Data
+## User Stories To Integrate Persistent Data
 
 ### User Story 1 – Persistent Login
 **Title:**  
@@ -191,11 +193,11 @@ As an admin, I want user activity logs to persist so that I can track and analyz
 
 ---
 
-📌 **Save as:** `userStories-persistent-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 8: Develop User Stories To Integrate External API
+## User Stories To Integrate External API
 
 ### User Story 1 – Weather Updates
 **Title:**  
@@ -236,11 +238,11 @@ As a user, I want to see nearby restaurants on a map so that I can choose a dini
 
 ---
 
-📌 **Save as:** `userStories-externalAPI-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 9: Develop User Stories To Implement Settings Menu
+## User Stories To Implement Settings Menu
 
 ### User Story 1 – Accessible Settings
 **Title:**  
@@ -281,11 +283,11 @@ As an admin, I want to enable or disable certain settings so that I can maintain
 
 ---
 
-📌 **Save as:** `userStories-settingMenu-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 10: Develop User Stories To Implement Settings Screen
+## User Stories To Implement Settings Screen
 
 ### User Story 1 – Dark Mode
 **Title:**  
@@ -326,11 +328,11 @@ As a user, I want to update my email and password so that I can keep my account 
 
 ---
 
-📌 **Save as:** `userStories-menuSettings-evidence.png`
+# 🧘 Meditation App – User Stories
 
 ---
 
-## Exercise 11: Develop User Stories To Implement Notifications
+## User Stories To Implement Notifications
 
 ### User Story 1 – Daily Reminders
 **Title:**  
@@ -383,5 +385,3 @@ As an admin, I want to send notifications to specific groups so that I can targe
 **Story Points:** 8  
 
 ---
-
-📌 **Save as:** `userStories-notifications-evidence.png`
