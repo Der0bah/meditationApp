@@ -1,6 +1,6 @@
 // app/(tabs)/settings/index.tsx
 import React from "react";
-import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -15,12 +15,8 @@ export default function SettingsMenu() {
   const { user, logout } = useAuth();
 
   const handleLogout = async () => {
-    try {
-      await logout();            // clears stored user data (via useAuth)
-      router.replace("/auth");   // navigate back to login/signup
-    } catch (e) {
-      // optionally show an Alert here
-    }
+    await logout();
+    router.replace("/auth");
   };
 
   const Item = ({
@@ -64,7 +60,7 @@ export default function SettingsMenu() {
         </View>
       </View>
 
-      {/* Menu */}
+      {/* Menu items */}
       <View style={{ gap: 12, marginTop: 14 }}>
         <Item
           icon="settings"
@@ -77,18 +73,17 @@ export default function SettingsMenu() {
           onPress={() => router.push("/reminders")}
         />
         <Item
-          icon="star-border"
-          label="My Favorites"
-          onPress={() => router.push("/favorites")}
-        />
-        <Item
           icon="info-outline"
           label="About"
           onPress={() => {
-            // route to an about page if you add one later
-            // e.g., router.push("/about");
+            // route to about page if you add one later
           }}
         />
+      </View>
+
+      {/* Navigate to Favorites via Button */}
+      <View style={{ marginTop: 20 }}>
+        <Button title="Favorites" onPress={() => router.push("/favorites")} />
       </View>
 
       {/* Logout */}
