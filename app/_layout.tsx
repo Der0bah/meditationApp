@@ -1,7 +1,6 @@
 // app/_layout.tsx
 import React, { useEffect } from "react";
 import { Stack, usePathname, useRouter, useSegments } from "expo-router";
-import { AuthProvider, useAuth } from "../hook/useAuth";
 import {
   useFonts,
   Inter_400Regular,
@@ -10,7 +9,28 @@ import {
   Inter_800ExtraBold,
 } from "@expo-google-fonts/inter";
 import { View } from "react-native";
+
+import { AuthProvider, useAuth } from "../hook/useAuth";
 import { MenuProvider } from "../components/MenuProvider";
+import * as Notifications from "expo-notifications";
+import { Platform } from "react-native";
+
+/** Show alert in foreground */
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+async function ensureAndroidChannel() {
+  if (Platform.OS !== "android") return;
+  await Notifications.setNotificationChannelAsync("default", {
+    name: "Default",
+    importance: Notifications.AndroidImportance.DEFAULT,
+  });
+}
 
 function Gate() {
   const { user } = useAuth();
@@ -19,15 +39,13 @@ function Gate() {
   const router = useRouter();
 
   useEffect(() => {
-    // If not logged in and not already on /auth → go to /auth
+    ensureAndroidChannel();
+  }, []);
+
+  useEffect(() => {
     const onAuth = segments[0] === "auth" || pathname === "/auth";
-    if (!user && !onAuth) {
-      router.replace("/auth");
-    }
-    // If logged in and on /auth → go to tabs
-    if (user && onAuth) {
-      router.replace("/(tabs)");
-    }
+    if (!user && !onAuth) router.replace("/auth");
+    if (user && onAuth) router.replace("/(tabs)");
   }, [user, segments, pathname]);
 
   return <Stack screenOptions={{ headerShown: false }} />;
@@ -40,6 +58,7 @@ export default function RootLayout() {
     Inter_700Bold,
     Inter_800ExtraBold,
   });
+
   if (!fontsLoaded) return <View />;
 
   return (

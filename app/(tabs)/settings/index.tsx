@@ -1,6 +1,6 @@
 // app/(tabs)/settings/index.tsx
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable, Button } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable, Button, Switch, Alert } from "react-native";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -9,10 +9,19 @@ import { Card } from "../../../components/ui";
 import { theme } from "../../../theme/colors";
 import { fonts } from "../../../theme/typography";
 import { useAuth } from "../../../hook/useAuth";
+import * as Notifications from "expo-notifications";
+
+async function scheduleNotification(title: string, body: string, inSeconds = 5) {
+  // Android channel is created in _layout
+  await Notifications.scheduleNotificationAsync({
+    content: { title, body },
+    trigger: { seconds: inSeconds },
+  });
+}
 
 export default function SettingsMenu() {
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout, settings, toggleNotifications } = useAuth();
 
   const handleLogout = async () => {
     await logout();
@@ -32,58 +41,59 @@ export default function SettingsMenu() {
       <Pressable onPress={onPress} style={s.row}>
         <MaterialIcons name={icon} size={22} color={theme.primary} />
         <Text style={s.rowLabel}>{label}</Text>
-        <MaterialIcons
-          name="chevron-right"
-          size={22}
-          color={theme.mutetext}
-          style={{ marginLeft: "auto" }}
-        />
+        <MaterialIcons name="chevron-right" size={22} color={theme.mutetext} style={{ marginLeft: "auto" }} />
       </Pressable>
     </Card>
   );
 
   return (
-    <ScrollView
-      style={{ flex: 1, backgroundColor: theme.bg }}
-      contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
-    >
+    <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ padding: 16, paddingBottom: 24 }}>
       <Header title="Settings" showBack />
 
-      {/* User info / greeting */}
+      {/* Greeting */}
       <View style={s.hero}>
         <MaterialIcons name="person" size={28} color="#fff" />
         <View style={{ marginLeft: 10 }}>
-          <Text style={s.hello}>
-            Hello, {user?.name?.split(" ")[0] || user?.username || "User"}!
-          </Text>
+          <Text style={s.hello}>Hello, {user?.name?.split(" ")[0] || user?.username || "User"}!</Text>
           <Text style={s.subHello}>Would you like to change any settings?</Text>
         </View>
       </View>
 
-      {/* Menu items */}
       <View style={{ gap: 12, marginTop: 14 }}>
-        <Item
-          icon="settings"
-          label="Account Settings"
-          onPress={() => router.push("/settings/settings")}
-        />
-        <Item
-          icon="notifications"
-          label="Notifications / Daily Reminders"
-          onPress={() => router.push("/reminders")}
-        />
-        <Item
-          icon="info-outline"
-          label="About"
-          onPress={() => {
-            // route to about page if you add one later
-          }}
-        />
-      </View>
+        {/* Notifications toggle */}
+        <Card>
+          <View style={s.row}>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
+              <MaterialIcons name="notifications-active" size={22} color={theme.primary} />
+              <Text style={s.rowLabel}>Notifications</Text>
+            </View>
+            <Switch
+              value={!!settings.notifications}
+              onValueChange={async () => {
+                await toggleNotifications();
+                if (!settings.notifications) {
+                  Alert.alert("Notifications enabled", "You can test a notification below.");
+                }
+              }}
+            />
+          </View>
+        </Card>
 
-      {/* Navigate to Favorites via Button */}
-      <View style={{ marginTop: 20 }}>
-        <Button title="Favorites" onPress={() => router.push("/favorites")} />
+        {/* Test notification */}
+        <Card>
+          <View style={{ padding: 14, gap: 8 }}>
+            <Button
+              title="Test Notification"
+              onPress={() => scheduleNotification("Time to Relax", "This is a test notification.", 5)}
+            />
+            <Text style={s.hint}>Sends a local notification in ~5 seconds.</Text>
+          </View>
+        </Card>
+
+        {/* Navigation items */}
+        <Item icon="schedule" label="Daily Reminders" onPress={() => router.push("/reminders")} />
+        <Item icon="star-border" label="My Favorites" onPress={() => router.push("/favorites")} />
+        <Item icon="settings" label="Account Settings" onPress={() => router.push("/settings/settings")} />
       </View>
 
       {/* Logout */}
@@ -103,28 +113,11 @@ const s = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  hello: {
-    color: "#fff",
-    fontSize: 18,
-    fontFamily: fonts.extrabold,
-    lineHeight: 22,
-  },
-  subHello: {
-    color: "#eef",
-    fontFamily: fonts.regular,
-    marginTop: 2,
-  },
-  row: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-    padding: 14,
-  },
-  rowLabel: {
-    fontSize: 16,
-    color: theme.text,
-    fontFamily: fonts.bold,
-  },
+  hello: { color: "#fff", fontSize: 18, fontFamily: fonts.extrabold, lineHeight: 22 },
+  subHello: { color: "#eef", fontFamily: fonts.regular, marginTop: 2 },
+  row: { flexDirection: "row", alignItems: "center", gap: 12, padding: 14 },
+  rowLabel: { fontSize: 16, color: theme.text, fontFamily: fonts.bold },
+  hint: { marginTop: 4, color: theme.mutetext, fontFamily: fonts.regular, textAlign: "center" },
   logout: {
     marginTop: 18,
     flexDirection: "row",
@@ -137,9 +130,5 @@ const s = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.border,
   },
-  logoutText: {
-    color: theme.danger,
-    fontFamily: fonts.extrabold,
-    fontSize: 16,
-  },
+  logoutText: { color: theme.danger, fontFamily: fonts.extrabold, fontSize: 16 },
 });
