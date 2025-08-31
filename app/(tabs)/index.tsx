@@ -9,6 +9,7 @@ import {
   Pressable,
   StyleSheet,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
 
@@ -20,7 +21,7 @@ import { useAuth } from "../../hook/useAuth";
 import { MEDITATIONS } from "../../constants/meditations";
 
 export default function Home() {
-  const { user, done, toggleDone } = useAuth();
+  const { hydrated, user, done, toggleDone } = useAuth();
   const router = useRouter();
 
   const renderCard = (item: (typeof MEDITATIONS)[number], compact = false) => {
@@ -84,34 +85,46 @@ export default function Home() {
         }
       />
 
-      {/* Welcome */}
-      <Text style={s.hi}>Hello {user?.name?.split(" ")[0] || "friend"}!</Text>
-      <Text style={s.subtitle}>Find your perfect meditation</Text>
+      {/* Conditional: show loading until storage has hydrated */}
+      {!hydrated ? (
+        <View style={{ paddingTop: 24 }}>
+          <ActivityIndicator />
+          <Text style={{ textAlign: "center", color: theme.mutetext, marginTop: 8, fontFamily: fonts.regular }}>
+            Loading your data…
+          </Text>
+        </View>
+      ) : (
+        <>
+          {/* Welcome */}
+          <Text style={s.hi}>Hello {user?.name?.split(" ")[0] || "friend"}!</Text>
+          <Text style={s.subtitle}>Find your perfect meditation</Text>
 
-      {/* Popular – horizontal */}
-      <Text style={s.sectionTitle}>Popular Meditations</Text>
-      <FlatList
-        data={MEDITATIONS.slice(0, 5)}
-        keyExtractor={(i) => i.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 14, paddingVertical: 8 }}
-        renderItem={({ item }) => renderCard(item, true)}
-      />
+          {/* Popular – horizontal */}
+          <Text style={s.sectionTitle}>Popular Meditations</Text>
+          <FlatList
+            data={MEDITATIONS.slice(0, 5)}
+            keyExtractor={(i) => i.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: 14, paddingVertical: 8 }}
+            renderItem={({ item }) => renderCard(item, true)}
+          />
 
-      {/* Daily – horizontal */}
-      <Text style={[s.sectionTitle, { marginTop: 6 }]}>Daily Meditation</Text>
-      <FlatList
-        data={MEDITATIONS}
-        keyExtractor={(i) => i.id}
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={{ gap: 14, paddingVertical: 8 }}
-        renderItem={({ item }) => renderCard(item, true)}
-      />
+          {/* Daily – horizontal */}
+          <Text style={[s.sectionTitle, { marginTop: 6 }]}>Daily Meditation</Text>
+          <FlatList
+            data={MEDITATIONS}
+            keyExtractor={(i) => i.id}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: 14, paddingVertical: 8 }}
+            renderItem={({ item }) => renderCard(item, true)}
+          />
+        </>
+      )}
 
       {/* Empty-state hint (if ever empty) */}
-      {MEDITATIONS.length === 0 && (
+      {hydrated && MEDITATIONS.length === 0 && (
         <Text style={s.placeholder}>
           Swipe right on an activity to mark as done.
         </Text>
