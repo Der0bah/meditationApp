@@ -19,9 +19,15 @@ function Gate() {
   const router = useRouter();
 
   useEffect(() => {
-    const inAuth = segments[0] === "auth" || pathname === "/auth";
-    if (!user && !inAuth) router.replace("/auth");
-    if (user && inAuth) router.replace("/(tabs)");
+    // If not logged in and not already on /auth → go to /auth
+    const onAuth = segments[0] === "auth" || pathname === "/auth";
+    if (!user && !onAuth) {
+      router.replace("/auth");
+    }
+    // If logged in and on /auth → go to tabs
+    if (user && onAuth) {
+      router.replace("/(tabs)");
+    }
   }, [user, segments, pathname]);
 
   return <Stack screenOptions={{ headerShown: false }} />;
