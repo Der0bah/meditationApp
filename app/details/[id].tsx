@@ -21,8 +21,15 @@ export default function Details() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ paddingBottom: 32 }}>
       <View style={{ paddingHorizontal: 16, paddingTop: 10 }}>
-        <Header right={<Pressable onPress={shareIt}><Text>🔗</Text></Pressable>} />
-      </View>
+  <Header
+    showBack
+    right={
+      <Pressable onPress={shareIt}>
+        <Text>🔗</Text>
+      </Pressable>
+    }
+  />
+</View>
 
       <Image source={{ uri: m.image }} style={s.heroImage} />
       <View style={{ paddingHorizontal: 16 }}>

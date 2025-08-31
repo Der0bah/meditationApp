@@ -17,6 +17,10 @@ export default function Favorites() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ padding: 16 }}>
       <Header right={<Text>⚙️</Text>} />
+      <Header
+  title="Favorites"
+  showBack
+/>
       <Text style={[s.sectionTitle, { textAlign: "center", color: theme.accent }]}>My Favourite Exercises</Text>
       <Text style={[s.sectionTitle, { marginTop: 8 }]}>Daily Meditation</Text>
 

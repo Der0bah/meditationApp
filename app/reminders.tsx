@@ -31,6 +31,10 @@ export default function Reminders() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ padding: 16 }}>
       <Header right={<Text>⚙️</Text>} />
+      <Header
+  title="Reminders"
+  showBack
+/>
 
       <Card>
         <View style={s.calendarHeader}>

@@ -10,6 +10,10 @@ export default function Settings() {
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ padding: 16 }}>
       <Header title="Settings" right={<Text>⚙️</Text>} />
+      <Header
+  title="Settings"
+  showBack
+/>
       <Card><Text style={{ padding: 14, fontFamily: fonts.regular }}>Dark Mode (coming soon)</Text></Card>
       <Card><Text style={{ padding: 14, fontFamily: fonts.regular }}>Push Notifications (coming soon)</Text></Card>
     </ScrollView>
