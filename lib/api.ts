@@ -1,5 +1,3 @@
-// lib/api.ts
-
 export type Country = {
   name: string;          // common name
   capital: string | null;
