@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Image, Pressable, ScrollView, StyleSheet, Text, View, Share } from "react-native";
 import { useLocalSearchParams } from "expo-router";
@@ -16,20 +15,24 @@ export default function Details() {
   const [tab, setTab] = useState<"about" | "instructions">("instructions");
   const isFav = favorites.includes(String(id));
 
-  const shareIt = async () => { try { await Share.share({ message: `${m.title} – ${m.about}` }); } catch {} };
+  const shareIt = async () => {
+    try {
+      await Share.share({ message: `${m.title} – ${m.about}` });
+    } catch {}
+  };
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: theme.bg }} contentContainerStyle={{ paddingBottom: 32 }}>
       <View style={{ paddingHorizontal: 16, paddingTop: 10 }}>
-  <Header
-    showBack
-    right={
-      <Pressable onPress={shareIt}>
-        <Text>🔗</Text>
-      </Pressable>
-    }
-  />
-</View>
+        <Header
+          showBack
+          right={
+            <Pressable onPress={shareIt}>
+              <Text>🔗</Text>
+            </Pressable>
+          }
+        />
+      </View>
 
       <Image source={{ uri: m.image }} style={s.heroImage} />
       <View style={{ paddingHorizontal: 16 }}>
@@ -71,7 +74,11 @@ export default function Details() {
         <Pressable onPress={() => toggleFavorite(String(id))} style={s.heartBtn}>
           <Text style={{ fontSize: 18 }}>{isFav ? "❤️" : "🤍"}</Text>
         </Pressable>
-        <PrimaryButton title={isFav ? "Added to Favorites" : "Add to Favorites"} onPress={() => toggleFavorite(String(id))} style={{ flex: 1 }} />
+        <PrimaryButton
+          title={isFav ? "Added to Favorites" : "Add to Favorites"}
+          onPress={() => toggleFavorite(String(id))}
+          style={{ flex: 1 }}
+        />
       </View>
     </ScrollView>
   );

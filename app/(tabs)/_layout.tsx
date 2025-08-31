@@ -1,23 +1,46 @@
-import React, { useEffect } from "react";
-import { Stack, usePathname, useRouter, useSegments } from "expo-router";
-import { AuthProvider, useAuth } from "../hook/useAuth";
-import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold } from "@expo-google-fonts/inter";
-import { View } from "react-native";
-+ import { MenuProvider } from "../components/MenuProvider";
+// app/(tabs)/_layout.tsx
+import React from "react";
+import { Tabs } from "expo-router";
+import { Ionicons } from "@expo/vector-icons";
+import { theme } from "../../theme/colors";
 
-function Gate() { /* unchanged */ }
-
-export default function RootLayout() {
-  const [fontsLoaded] = useFonts({
-    Inter_400Regular, Inter_600SemiBold, Inter_700Bold, Inter_800ExtraBold,
-  });
-  if (!fontsLoaded) return <View />;
-
+export default function TabsLayout() {
   return (
-    <AuthProvider>
-+     <MenuProvider>
-        <Gate />
-+     </MenuProvider>
-    </AuthProvider>
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: theme.primary,
+        tabBarInactiveTintColor: theme.mutetext,
+        tabBarStyle: { backgroundColor: "#fff", borderTopColor: theme.border },
+      }}
+    >
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="home-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="favorites"
+        options={{
+          title: "Favorites",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="star-outline" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="settings/index"
+        options={{
+          title: "Settings",
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="settings-outline" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }
