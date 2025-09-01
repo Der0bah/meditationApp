@@ -1,6 +1,6 @@
 // app/_layout.tsx
 import React, { useEffect } from "react";
-import { Stack, usePathname, useRouter, useSegments } from "expo-router";
+import { Slot, usePathname, useRouter, useSegments } from "expo-router";
 import {
   useFonts,
   Inter_400Regular,
@@ -8,14 +8,14 @@ import {
   Inter_700Bold,
   Inter_800ExtraBold,
 } from "@expo-google-fonts/inter";
-import { View } from "react-native";
+import { View, Platform } from "react-native";
 
 import { AuthProvider, useAuth } from "../hook/useAuth";
 import { MenuProvider } from "../components/MenuProvider";
-import * as Notifications from "expo-notifications";
-import { Platform } from "react-native";
 
-/** Show alert in foreground */
+import * as Notifications from "expo-notifications";
+
+/** Show alert while app is foregrounded */
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -32,6 +32,7 @@ async function ensureAndroidChannel() {
   });
 }
 
+/** Auth gate that protects routes and redirects */
 function Gate() {
   const { user } = useAuth();
   const segments = useSegments();
@@ -48,7 +49,8 @@ function Gate() {
     if (user && onAuth) router.replace("/(tabs)");
   }, [user, segments, pathname]);
 
-  return <Stack screenOptions={{ headerShown: false }} />;
+  // Render children (all routes) INSIDE the provider/context
+  return <Slot />;
 }
 
 export default function RootLayout() {

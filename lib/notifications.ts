@@ -2,14 +2,22 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
-/** Show alerts/plays sound when app is foregrounded */
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: false,
-    shouldSetBadge: false,
-  }),
-});
+/**
+ * Web doesn't support native scheduling via expo-notifications.
+ * We provide safe fallbacks (alert + setTimeout) on web.
+ */
+const isWeb = Platform.OS === "web";
+
+export function initNotificationHandler() {
+  // This exists on web as a no-op; safe to call.
+  Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+      shouldShowAlert: true,
+      shouldPlaySound: false,
+      shouldSetBadge: false,
+    }),
+  });
+}
 
 export async function ensureAndroidChannel() {
   if (Platform.OS !== "android") return;
@@ -20,20 +28,37 @@ export async function ensureAndroidChannel() {
 }
 
 export async function requestNotificationPermissions(): Promise<boolean> {
-  const settings = await Notifications.getPermissionsAsync();
-  if (settings.status !== "granted") {
+  if (isWeb) {
+    // On web, expo-notifications permissions are not relevant to our fallback.
+    return true;
+  }
+  const { status } = await Notifications.getPermissionsAsync();
+  if (status !== "granted") {
     const req = await Notifications.requestPermissionsAsync();
     return req.status === "granted";
   }
   return true;
 }
 
-/** schedule a simple notification after N seconds (default 10) */
+/**
+ * Schedule a simple local notification after N seconds.
+ * - Native (iOS/Android): uses expo-notifications scheduling
+ * - Web: setTimeout + alert() as a soft fallback
+ */
 export async function scheduleNotification(
   title: string,
   body: string,
   inSeconds = 10
 ) {
+  if (isWeb) {
+    setTimeout(() => {
+      // best-effort web fallback
+      // eslint-disable-next-line no-alert
+      alert(`${title}\n\n${body}`);
+    }, Math.max(0, inSeconds) * 1000);
+    return "web-fallback-id";
+  }
+
   await ensureAndroidChannel();
   return Notifications.scheduleNotificationAsync({
     content: { title, body },
@@ -41,11 +66,24 @@ export async function scheduleNotification(
   });
 }
 
-/** schedule by ISO date/time (local) */
+/**
+ * Schedule at a specific local date/time.
+ * - Native: uses date trigger
+ * - Web: computes delay and uses setTimeout + alert()
+ */
 export async function scheduleAt(date: Date, title: string, body: string) {
+  if (isWeb) {
+    const delay = Math.max(0, date.getTime() - Date.now());
+    setTimeout(() => {
+      // eslint-disable-next-line no-alert
+      alert(`${title}\n\n${body}`);
+    }, delay);
+    return "web-fallback-id";
+  }
+
   await ensureAndroidChannel();
   return Notifications.scheduleNotificationAsync({
     content: { title, body },
-    trigger: date, // fires at local time
+    trigger: date,
   });
 }

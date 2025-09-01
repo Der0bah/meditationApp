@@ -9,7 +9,7 @@ type User = {
   email: string;
   age?: string;
   country?: string;
-  /** Demo only — do NOT store plaintext passwords in real apps */
+  /** Demo only — do NOT store plaintext passwords in production */
   password: string;
 };
 
@@ -19,14 +19,14 @@ type Settings = {
 
 type AuthContextShape = {
   user: User | null;
-  favorites: string[]; // meditation ids
+  favorites: string[];
   settings: Settings;
 
   login: (email: string, password: string) => Promise<boolean>;
   signup: (u: User) => Promise<void>;
   logout: () => Promise<void>;
 
-  toggleFavorite: (id: string) => void | Promise<void>;
+  toggleFavorite: (id: string) => void;
   toggleNotifications: () => Promise<void>;
   setSettings: React.Dispatch<React.SetStateAction<Settings>>;
 };
@@ -59,7 +59,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [settings, setSettings] = useState<Settings>({ notifications: false });
   const [hydrated, setHydrated] = useState(false);
 
-  // Hydrate from storage
   useEffect(() => {
     (async () => {
       const [u, f, s] = await Promise.all([
@@ -74,7 +73,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })();
   }, []);
 
-  // Persist favorites/settings on change (after hydration)
   useEffect(() => {
     if (!hydrated) return;
     saveJSON(K_FAVORITES, favorites);
@@ -96,36 +94,25 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   const signup = async (u: User) => {
-    // simple overwrite demo
     setUser(u);
     await saveJSON(K_USER, u);
   };
 
   const logout = async () => {
     setUser(null);
-    // Keep favorites/settings unless you want a full reset:
-    // setFavorites([]); await removeKey(K_FAVORITES);
     await removeKey(K_USER);
   };
 
   const toggleFavorite = (id: string) => {
-    setFavorites((prev) => {
-      const exists = prev.includes(id);
-      const next = exists ? prev.filter((x) => x !== id) : [...prev, id];
-      return next;
-    });
+    setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
   };
 
   const toggleNotifications = async () => {
-    // If turning ON, request permission first
     if (!settings.notifications) {
       const current = await Notifications.getPermissionsAsync();
       if (current.status !== "granted") {
         const req = await Notifications.requestPermissionsAsync();
-        if (req.status !== "granted") {
-          // permission denied — don't enable
-          return;
-        }
+        if (req.status !== "granted") return; // keep off if denied
       }
     }
     setSettings((s) => ({ ...s, notifications: !s.notifications }));
