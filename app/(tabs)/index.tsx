@@ -10,7 +10,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
-import Header from "../../components/Header"; // ✅ correct relative path
+import Header from "../../components/Header"; // ✅ fixed path
 import { theme } from "../../theme/colors";
 import { fonts } from "../../theme/typography";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -70,10 +70,7 @@ export default function Home() {
   }: {
     item: { id: string; title: string; tag: string; duration: number; image: string };
   }) => (
-    <Pressable
-      onPress={() => router.push(`/details/${item.id}`)}
-      style={s.card}
-    >
+    <Pressable onPress={() => router.push(`/details/${item.id}`)} style={s.card}>
       <Image source={{ uri: item.image }} style={s.cardImg} />
       <View style={{ padding: 12 }}>
         <View style={s.tagRow}>
@@ -82,8 +79,6 @@ export default function Home() {
         </View>
         <Text style={s.title}>{item.title}</Text>
         <Text style={s.desc}>Find your rhythm and unwind.</Text>
-
-        {/* actions inside cards */}
         <View style={s.actions}>
           <MaterialIcons name="check-circle-outline" size={20} color={theme.primary} />
           <MaterialIcons name="edit" size={20} color={theme.mutetext} />
@@ -160,10 +155,5 @@ const s = StyleSheet.create({
   },
   title: { marginTop: 6, color: theme.text, fontFamily: fonts.extrabold, fontSize: 16 },
   desc: { color: theme.mutetext, marginTop: 2, fontFamily: fonts.regular, fontSize: 12 },
-  actions: {
-    marginTop: 8,
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
-  },
+  actions: { marginTop: 8, flexDirection: "row", alignItems: "center", gap: 12 },
 });

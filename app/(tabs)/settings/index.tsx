@@ -1,23 +1,18 @@
 // app/(tabs)/settings/index.tsx
 import React from "react";
-import { ScrollView, StyleSheet, Text, View, Pressable, Button, Switch, Alert } from "react-native";
+import { ScrollView, StyleSheet, Text, View, Pressable, Button, Switch, Alert, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import Header from "../../../components/Header";
-import { Card } from "../../../components/ui";
-import { theme } from "../../../theme/colors";
-import { fonts } from "../../../theme/typography";
-import { useAuth } from "../../../hook/useAuth";
-import * as Notifications from "expo-notifications";
-
-async function scheduleNotification(title: string, body: string, inSeconds = 5) {
-  // Android channel is created in _layout
-  await Notifications.scheduleNotificationAsync({
-    content: { title, body },
-    trigger: { seconds: inSeconds },
-  });
-}
+import Header from "../../../components/Header";               // ← three dots up
+import { Card } from "../../../components/ui";                // ← three dots up
+import { theme } from "../../../theme/colors";                // ← three dots up
+import { fonts } from "../../../theme/typography";            // ← three dots up
+import { useAuth } from "../../../hook/useAuth";              // ← three dots up
+import {
+  requestNotificationPermissions,
+  scheduleNotification,
+} from "../../../lib/notifications";                          // ← three dots up
 
 export default function SettingsMenu() {
   const router = useRouter();
@@ -60,7 +55,7 @@ export default function SettingsMenu() {
       </View>
 
       <View style={{ gap: 12, marginTop: 14 }}>
-        {/* Notifications toggle */}
+        {/* Notifications toggle (web-only) */}
         <Card>
           <View style={s.row}>
             <View style={{ flexDirection: "row", alignItems: "center", gap: 10 }}>
@@ -70,6 +65,17 @@ export default function SettingsMenu() {
             <Switch
               value={!!settings.notifications}
               onValueChange={async () => {
+                if (Platform.OS !== "web") {
+                  Alert.alert("Not available", "Notifications are only supported on the web in this build.");
+                  return;
+                }
+                if (!settings.notifications) {
+                  const granted = await requestNotificationPermissions();
+                  if (!granted) {
+                    Alert.alert("Permission needed", "Allow browser notifications to use reminders.");
+                    return;
+                  }
+                }
                 await toggleNotifications();
                 if (!settings.notifications) {
                   Alert.alert("Notifications enabled", "You can test a notification below.");
@@ -79,14 +85,20 @@ export default function SettingsMenu() {
           </View>
         </Card>
 
-        {/* Test notification */}
+        {/* Test notification (web only) */}
         <Card>
           <View style={{ padding: 14, gap: 8 }}>
             <Button
               title="Test Notification"
-              onPress={() => scheduleNotification("Time to Relax", "This is a test notification.", 5)}
+              onPress={() => {
+                if (Platform.OS !== "web") {
+                  Alert.alert("Not available", "Notifications are only supported on the web in this build.");
+                  return;
+                }
+                scheduleNotification("Time to Relax", "This is a test notification.", 3);
+              }}
             />
-            <Text style={s.hint}>Sends a local notification in ~5 seconds.</Text>
+            <Text style={s.hint}>On web, this shows a browser notification after ~3 seconds.</Text>
           </View>
         </Card>
 
